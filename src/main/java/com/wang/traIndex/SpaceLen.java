@@ -16,7 +16,8 @@ import java.util.*;
 public class SpaceLen {
     public static void main(String[] args) throws IOException {
         //List<Trajectory> trajectoriesSet = ReadToTra.proToTra(args[0]);
-        List<Trajectory> trajectoriesSet = ReadToTra.proToTra("D:\\TraDataSet\\T-drive Taxi Trajectories\\len80");
+        //List<Trajectory> trajectoriesSet = ReadToTra.proToTra("D:\\TraDataSet\\T-drive Taxi Trajectories\\len80");
+        List<Trajectory> trajectoriesSet = ReadToTra.geoLifeToTra("D:\\TrajectoryDataset\\geoline");
         Map<String, Trajectory> map = new HashMap<>();
         for (int i = 0; i < trajectoriesSet.size(); i++) {
             map.put(trajectoriesSet.get(i).getName(), trajectoriesSet.get(i));
@@ -52,7 +53,7 @@ public class SpaceLen {
                 fangCha += (junTime - timeList.get(i))*(junTime - timeList.get(i));
             }
             fangCha = fangCha/timeList.size();
-            System.out.println("滑动窗口长度为：" + count  +
+            System.out.println("网格宽度：" + count  +
                     "时候，top_k查询耗时平均耗时 :" + junTime + "ms，方差为" + fangCha);
         }
 

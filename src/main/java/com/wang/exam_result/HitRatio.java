@@ -49,9 +49,20 @@ public class HitRatio {
 
 
     public static List<Trajectory> hitRatio(String path) throws IOException {
-        List<Trajectory> trajectories = ReadToTra.proToTra(path);
+        //List<Trajectory> trajectories = ReadToTra.proToTra(path);
+        List<Trajectory> trajectories = ReadToTra.geoLifeToTra(path);
         //List<Trajectory> trajectories = ReadToTra.readFromFile(path);
-
+        System.out.println(trajectories.size());
+        Iterator<Trajectory> iterator = trajectories.iterator();
+        int c = 0;
+        while(c < 9000){
+            if(iterator.hasNext()){
+                iterator.next();
+                iterator.remove();
+            }
+            c ++;
+        }
+        System.out.println(trajectories.size());
         List<Trajectory> res = new ArrayList<>();
         int lenCount = 0;
         for(int i = 0;i < 1000;i++){
@@ -63,27 +74,19 @@ public class HitRatio {
     }
 
     public static void main(String[] args) throws IOException {
-        String outputPath = "D:\\TraDataSet\\波兰\\simTra_1000_最相似轨迹";
-        //String outputPath = "D:\\TraDataSet\\T-drive Taxi Trajectories\\最相似";
-        //getSample("D:\\TraDataSet\\波兰\\data",1200000, outputPath);
-        List<Trajectory> trajectories = hitRatio(outputPath);
-        List<Trajectory> abandon = Abandon.abandon(trajectories,0.01);
-        /*MPS.hit(trajectories,abandon);
-        SimSt_o.hit(trajectories,abandon);
-        Bucket.hit(trajectories,abandon);
-        SimSt.hit(trajectories,abandon);*/
-        //DTW.hit(trajectories,abandon);
-        Bucket.hit(trajectories,abandon);
-        //EDwP.hit(trajectories,abandon);
-        /*String outputPath = "D:\\TraDataSet\\T-drive Taxi Trajectories\\最相似";
-        List<Trajectory> trajectories = hitRatio(outputPath);
-        List<Trajectory> abandon = Abandon.abandon(trajectories,0.02);
-        for(int i = 0;i < 1;i++){
-            Map<String, Integer> map = CreateBucket.select_tra(abandon.get(i));
-            System.out.println(map.size());
-            for(Map.Entry<String,Integer> entry : map.entrySet()){
-                System.out.println(entry.getKey() + "  " + entry.getValue());
-            }
-        }*/
+        //String outputPath = "D:\\TrajectoryDataset\\Porto\\simTra_1000_最相似轨迹";
+        String outputPath = "D:\\TrajectoryDataset\\geoline";
+        //String outputPath = args[0];;
+        double[] count = {0.01,0.03,0.05,0.07,0.15,0.23,0.31,0.39};
+        for(double c : count){
+            System.out.println("采样率为" + c );
+            List<Trajectory> trajectories = hitRatio(outputPath);
+            List<Trajectory> abandon = Abandon.abandon(trajectories,c);
+            //EDwP.hit(trajectories,abandon);
+            //DTW.hit(trajectories,abandon);
+            //SimSt.hit(trajectories,abandon);
+            Bucket.hit(trajectories,abandon);
+        }
+
     }
 }

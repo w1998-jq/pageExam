@@ -6,6 +6,7 @@ import com.wang.tra.Point;
 import com.wang.tra.Trajectory;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -87,15 +88,18 @@ public class MPS {
                 System.out.println("MPS 已经计算" + (i) / 10 + "%  命中数量" + rightCount);
             }
             double min = Double.MIN_VALUE;
+            BigDecimal minB = new BigDecimal(String.valueOf(min));
             int index = -1;
             for(int j = 0;j < 100;j++){
                 double mps = MPS(abandon.get(i).getPoints(), trajectories.get(j).getPoints(), 0.5);
                 //System.out.println(mps);
+                //BigDecimal mT = new BigDecimal(String.valueOf(mps));
                 if(min < mps){
                     min = mps;
                     index = j;
                 }
             }
+
             if(trajectories.get(index).getName().equals(abandon.get(i).getName())){
                 rightCount++;
             }

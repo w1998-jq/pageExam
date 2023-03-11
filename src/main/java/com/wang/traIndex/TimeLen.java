@@ -24,7 +24,7 @@ public class TimeLen {
      */
     public static void main(String[] args) throws IOException {
         //List<Trajectory> trajectoriesSet = ReadToTra.proToTra(args[0]);
-        List<Trajectory> trajectoriesSet = ReadToTra.proToTra("D:\\TraDataSet\\T-drive Taxi Trajectories\\len80");
+        List<Trajectory> trajectoriesSet = ReadToTra.geoLifeToTra("D:\\TrajectoryDataset\\geoline");
         Map<String, Trajectory> map = new HashMap<>();
         for (int i = 0; i < trajectoriesSet.size(); i++) {
             map.put(trajectoriesSet.get(i).getName(), trajectoriesSet.get(i));
@@ -37,11 +37,11 @@ public class TimeLen {
             }
             trajectories.add(trajectoriesSet.get(i));
         }
-        //int[] counts = {50, 80, 110, 140, 170, 200};
-        int[] counts = {1,2,3,4,5,6};
+        int[] counts = {50, 80, 110, 140, 170, 200};
+        //int[] counts = {1,2,3,4,5,6};
         for (int count : counts) {
-            CreateBucket createBucket = new CreateBucket(count, trajectoriesSet,
-                    trajectoriesSet.size(), 50, 200);
+            CreateBucket createBucket = new CreateBucket(2, trajectoriesSet,
+                    trajectoriesSet.size() - 1, count, 200);
 
             List<Long> timeList = new ArrayList<>();
             long time = 0l;
@@ -56,7 +56,7 @@ public class TimeLen {
             long junTime = time/ trajectories.size();
             double fangCha = 0.0;
             for(int i = 0;i < timeList.size();i ++){
-                fangCha += (junTime - timeList.get(i))*(junTime - timeList.get(i));
+                //fangCha += (junTime - timeList.get(i))*(junTime - timeList.get(i));
             }
             fangCha = fangCha/timeList.size();
             System.out.println("时间槽跨度为：" + count  +

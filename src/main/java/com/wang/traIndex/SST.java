@@ -55,7 +55,6 @@ public class SST {
         }
         return (int) ((lat - 37d)/preLat) + (int) ((lon-(-9d))/preLon) * len;
 
-        //return compressPoint.getGeoHashID(lon,lat,7);
     }
 
 

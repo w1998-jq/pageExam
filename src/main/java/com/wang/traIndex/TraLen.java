@@ -15,8 +15,10 @@ import java.util.*;
  */
 public class TraLen {
     public static void main(String[] args) throws IOException {
-        List<Trajectory> trajectoriesSet = ReadToTra.proToTra(args[0]);
+        //List<Trajectory> trajectoriesSet = ReadToTra.proToTra(args[0]);
         //List<Trajectory> trajectoriesSet = ReadToTra.proToTra("D:\\TraDataSet\\波兰\\data");
+        List<Trajectory> trajectoriesSet = ReadToTra.geoLifeToTra("D:\\TrajectoryDataset\\geoline");
+
         Map<String, Trajectory> map = new HashMap<>();
         for (int i = 0; i < trajectoriesSet.size(); i++) {
             map.put(trajectoriesSet.get(i).getName(), trajectoriesSet.get(i));

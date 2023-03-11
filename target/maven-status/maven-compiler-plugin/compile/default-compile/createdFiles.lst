@@ -1,5 +1,4 @@
 com\wang\duxiaoman\Two.class
-com\wang\MokerTree\Trie.class
 com\wang\test\Solution.class
 com\wang\indexStruc\CreateBucket$1.class
 com\wang\tra\TimeComparator.class
@@ -13,6 +12,7 @@ com\wang\traIndex\MokerTree.class
 com\wang\traIndex\SST.class
 com\wang\traIndex\TimeLen.class
 com\wang\traIndex\WinLen.class
+com\wang\MokerTree\MerkelTrie.class
 com\wang\traIndex\TraLen.class
 com\wang\traIndex\SpaceLen.class
 com\wang\test\ProductServiceImpl.class
@@ -20,11 +20,19 @@ com\wang\dataRead\ReadToTra.class
 com\wang\duxiaoman\Three.class
 com\wang\utils\MapValueComparator.class
 com\wang\evaluateMethods\SimSt_o.class
+com\wang\tra\Point_shi.class
+com\wang\test\Geoline.class
 com\wang\duxiaoman\One.class
+com\wang\MokerTree\Tries.class
+com\wang\traIndex\CanCount.class
 com\wang\indexStruc\CompressPoint.class
+com\wang\test\Trucks.class
+com\wang\tra\Trajectory_shi.class
 com\wang\tra\Point.class
 com\wang\traIndex\LSH.class
 com\wang\MokerTree\Node.class
+com\wang\traIndex\MokerTree$1.class
+com\wang\traIndex\Tries_test.class
 com\wang\dataRead\Abandon.class
 com\wang\evaluateMethods\SimSt.class
 com\wang\test\ServiceFactory.class
@@ -33,5 +41,7 @@ com\wang\evaluateMethods\EDwP.class
 com\wang\indexStruc\CreateBucket.class
 com\wang\evaluateMethods\MPS.class
 com\wang\test\One.class
+com\wang\traIndex\MokerTree_Shi.class
 com\wang\exam_result\HitRatio.class
 com\wang\test\ProductService.class
+com\wang\indexStruc\CreateBucket$2.class

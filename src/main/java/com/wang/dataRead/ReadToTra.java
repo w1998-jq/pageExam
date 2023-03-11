@@ -2,7 +2,9 @@ package com.wang.dataRead;
 
 import com.csvreader.CsvReader;
 import com.wang.tra.Point;
+import com.wang.tra.Point_shi;
 import com.wang.tra.Trajectory;
+import com.wang.tra.Trajectory_shi;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
@@ -68,6 +70,7 @@ public class ReadToTra {
         List<Trajectory> res = new ArrayList<>();
         int count = 0;
         while (it.hasNext()){
+
             String[] split = it.next().split("\t");
             String name_time = split[0];
             long time = Long.parseLong(name_time.split("#")[1]) * 1000;
@@ -89,7 +92,84 @@ public class ReadToTra {
         }
         return res;
     }
+    /**
+     * 读取十所的数据
+     * @author jqWang
+     * @date 2023/2/12 10:59
+     * @param path
+     * @return List<Trajectory>
+     */
+    public static List<Trajectory_shi> shiSuoToTra(String path) throws IOException {
+        LineIterator it = FileUtils.lineIterator(new File(path));
+        List<Trajectory_shi> res = new ArrayList<>();
+        int count = 0;
+        while (it.hasNext()){
+            String[] split = it.next().split("\t");
+            String name = split[0]+"00000000000";
+            Point_shi[] tra = new Point_shi[split.length - 1];
+            for(int i = 1;i < split.length;i++){
+                String[] lat_lon = split[i].split("#"); //经纬度
+                Point_shi point = new Point_shi(Integer.parseInt(split[i]),i - 1);
 
+                tra[i - 1] = point;
+            }
+            Trajectory_shi trajectory = new Trajectory_shi(name, tra);
+            res.add(trajectory);
+            count++;
+            if(count % 5000000 == 0){
+                System.out.println("已读取轨迹数量：" + count);
+            }
+        }
+        return res;
+    }
+    /**
+     * 读取geolife文件夹
+     * @author jqWang
+     * @date 2023/2/13 14:33
+     * @param path
+     * @return List<Trajectory_shi>
+     */
+    public static List<Trajectory> geoLifeToTra(String path) throws IOException {
+        LineIterator it = FileUtils.lineIterator(new File(path));
+        List<Trajectory> res = new ArrayList<>();
+        int count = 0;
+        int preUser = -1;
+        List<Point> tra = null;
+        while (it.hasNext()){
+
+            String[] split = it.next().split("\t");
+            double lon = Double.parseDouble(split[2]);
+            double lat = Double.parseDouble(split[1]);
+            int time = Integer.parseInt(split[3]);
+            if(preUser == -1){
+                tra = new ArrayList<>();
+                tra.add(new Point(lon,lat,time));
+                preUser = Integer.parseInt(split[0]);
+            }else if(Integer.parseInt(split[0]) != preUser){
+                Point[] points = new Point[tra.size()];
+                for(int i = 0;i < tra.size();i++){
+                    points[i] = tra.get(i);
+                }
+                count ++;
+                res.add(new Trajectory(preUser+"",points));
+                tra = new ArrayList<>();
+                if(res.size()>200000){
+                    break;
+                }
+                preUser = Integer.parseInt(split[0]);
+            }else{
+                tra.add(new Point(lon,lat,time));
+
+            }
+        }
+        Point[] points = new Point[tra.size()];
+        for(int i = 0;i < tra.size();i++){
+            points[i] = tra.get(i);
+        }
+        res.add(new Trajectory(preUser+"00000000",points));
+        System.out.println(count + "轨迹读取完毕");
+        return res;
+    }
     /**
      * @description:  将滴滴数据集读取为 Trajectory 对象
      * @param: path
@@ -105,7 +185,9 @@ public class ReadToTra {
         List<Trajectory> res = new ArrayList<>();
         int counts = 0;
         while(it.hasNext()){
-            String[] line = it.next().split(",");
+            String l = it.next();
+            System.out.println(l);
+            String[] line = l.split(",");
             if(name == null){
                 name = line[0];
             }
